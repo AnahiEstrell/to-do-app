@@ -1,0 +1,27 @@
+services:
+  app:
+    container_name: to-do-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+        - to-do-volume:/app
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  db:
+    container_name: to-do-db
+    image: postgres:16.3
+    env_file:
+      - .env.db
+    ports:
+      - "5432:5432"
+    volumes:
+        - to-do-volume:/app
+
+volumes:
+  to-do-volume: 
